@@ -1,0 +1,218 @@
+@media (max-width: 1024px) {
+  .cols {
+    /* display: block; */
+    margin-top: 54px;
+    padding: 20px;
+  }
+  .col-1 {
+    padding: 16px;
+  }
+  .col-2 {
+    padding: 16px;
+  }
+  .col-3 {
+    padding: 16px;
+  }
+  .post {
+    width: 100%;
+  }
+
+  .recent-activity {
+    padding: 4px;
+  }
+  .recent-title {
+    padding: 5px;
+    /* text-align: justify; */
+  }
+  .recent-author {
+    /* padding: 10px; */
+    text-align: start;
+  }
+
+  .authors {
+    /* margin: 5px 0; */
+    display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  /* The Modal (background) */
+  .modal {
+    position: fixed;
+    z-index: 1;
+    padding: 170px 10px 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: none;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  .modal-content .head {
+    color: #bb86fc;
+    user-select: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    padding-bottom: 6px;
+  }
+
+  /* Modal Content */
+  .modal-content {
+    background-color: rgb(36, 37, 38);
+    margin: auto;
+    padding: 20px;
+    border-radius: 9px;
+    border: 1px solid rgb(255 255 255 / 0.4);
+    /* width: 554px; */
+    height: 350px;
+    /* width: 80%; */
+  }
+  .modal-content form > div {
+    padding: 12px 6px 8px 0;
+    width: 100%;
+  }
+  .modal-content ::placeholder {
+    color: #fff;
+  }
+  .modal-content input,
+  textarea {
+    font-weight: 400;
+    color: #fff;
+    /* background-color: #bebbbbde; */
+    width: 100%;
+    outline: none;
+    border: 1px solid rgb(0 0 0 / 0.2);
+    border-radius: 9px;
+  }
+  #postTitle1::placeholder {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  #postTitle1 {
+    background-color: #545454;
+    font-size: 17px;
+    padding: 10px 10px;
+  }
+  #postDet1 {
+    font-family: none;
+    font-size: 16px;
+    width: 100%;
+    resize: none;
+    /* padding: ; */
+    padding: 10px;
+    height: 180px;
+  }
+
+  #postDet1 ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .modal-content .subBtn {
+    cursor: pointer;
+    background-color: rgb(0, 102, 255);
+    color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+    float: right;
+    margin-right: 6px;
+    user-select: none;
+  }
+  .subBtn:hover {
+    transition: 0.3s ease-in-out;
+    color: #5d457b;
+    background-color: #bb86fc;
+  }
+
+  /* The Close Button */
+  .close {
+    user-select: none;
+    color: #aaaaaa;
+    float: right;
+    margin-top: -15px;
+    border-radius: 1px solid white;
+    padding: 0 8px;
+    background-color: #eee7e7;
+    border-radius: 16px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .profile-setting {
+    display: block;
+    line-height: 1.5;
+    /* margin-top: ;     */
+    margin-left: 12px;
+    color: black;
+    padding: 1px 3px;
+  }
+  .fixed_btn {
+    font-size: large;
+    display: block;
+    position: fixed;
+    background-color: rgb(0, 102, 255);
+    color: #fff;
+    right: 28px;
+    bottom: 54px;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 50%;
+  }
+  .drop-box {
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 56px;
+    background-color: #fff;
+    border-radius: 9px;
+    padding: 12px;
+    border: 1px solid rgb(0 0 0/0.3);
+  }
+  .up-arrow {
+    border-radius: 1px solid black;
+  }
+  .profile-setting {
+    color: #fff;
+  }
+  .logout a {
+    padding: 0;
+    color: #000;
+  }
+  .cols {
+    /* display: block; */
+    margin-top: 56px;
+    padding: 16px;
+    flex-direction: column-reverse;
+  }
+  .col-1 {
+    display: none;
+  }
+  .meta-upload {
+    display: none;
+  }
+  .post {
+    width: 100%;
+  }
+  .rank {
+    padding: 6px;
+  }
+  .rank .head {
+    /* text-align: center; */
+    margin-left: 16px;
+  }
+  .authors {
+    text-align: start;
+    margin-left: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+}

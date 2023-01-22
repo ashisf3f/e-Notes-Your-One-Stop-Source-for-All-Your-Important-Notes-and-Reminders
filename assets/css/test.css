@@ -1,0 +1,281 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  /* color: #545454; */
+  color: rgba(255, 255, 255, 0.6);
+
+  background-color: #121212;
+  /* background-color: rgba(238, 238, 238, 0.562); */
+}
+
+body::-webkit-scrollbar {
+  width: 3px;
+}
+body::-webkit-scrollbar-track {
+  background: #000;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #cde0e2;
+  border-radius: 20px;
+  border: 1px solid rgb(0 0 0 /0.2);
+}
+
+.topbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.35);
+  display: flex;
+  /* background-color: #fff; */
+  background-color: rgb(36, 37, 38);
+  justify-content: space-between;
+  padding: 12px 24px;
+}
+.user-name {
+  line-height: 1.5;
+  margin: 0 6px;
+  /* color: #000; */
+  color: #fff;
+  cursor: default;
+}
+.user-name a {
+  /* color: #000; */
+  color: #fff;
+  text-decoration: none;
+}
+
+.profile-menu {
+  display: flex;
+}
+.profile-menu img {
+  cursor: pointer;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+}
+.profile-setting {
+  display: none;
+}
+.fixed_btn {
+  display: none;
+}
+.modal {
+  display: none;
+}
+
+.cols {
+  padding: 80px 24px 0px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.col-1 {
+  padding: 26px;
+}
+.actions {
+  /* text-align: center; */
+  border-radius: 4px;
+  /* background-color: #fff; */
+  background-color: rgb(36, 37, 38);
+  padding: 24px;
+}
+
+.log {
+  display: block;
+  /* float: right; */
+  /* text-align: end; */
+  margin: 16px 10px 0;
+}
+.log a {
+  text-decoration: none;
+  color: #fff;
+}
+.log i {
+  /* color: #000; */
+  padding-right: 4px;
+}
+.division {
+  margin-top: 40px;
+}
+.recent-activity {
+  padding: 20px;
+  border-radius: 6px;
+  background-color: rgb(36, 37, 38);
+}
+.recent-details {
+  word-break: break-all;
+  width: 100%;
+  color: #fff;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.rt {
+  text-decoration: underline;
+}
+.recent-author {
+  font-size: small;
+  text-align: center;
+}
+.recent-activity .ra {
+  font-style: italic;
+}
+.col-2 {
+  padding: 24px;
+}
+.meta {
+  margin-right: auto;
+  margin-left: auto;
+}
+.meta-upload {
+  border-radius: 9px;
+  display: flex;
+  background-color: rgb(36, 37, 38);
+  padding: 16px;
+}
+.user-avatar img {
+  border-radius: 50%;
+  height: 28px;
+  width: 28px;
+}
+.upload-details {
+  width: 100%;
+  padding: 3px 24px;
+}
+.upload-content {
+  box-sizing: content-box;
+}
+::placeholder {
+  color: #fff;
+}
+.upload-content input,
+textarea {
+  color: #fff;
+  background-color: #545454;
+  width: 100%;
+  padding: 8px 6px;
+  border-radius: 6px;
+  border: 1px solid rgb(0 0 0 /0.2);
+  outline: none;
+}
+.title input {
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+}
+.story textarea {
+  color: #fff;
+  margin-top: 6px;
+  resize: none;
+  height: 96px;
+  font-size: 16px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.sub-btn {
+  float: right;
+  padding: 6px 0;
+}
+.sub-btn button {
+  border: none;
+  padding: 3px 6px;
+  background-color: rgb(0, 102, 255);
+  color: #fff;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* post items    */
+.meta-body {
+  margin-top: 36px;
+}
+.post {
+  margin-bottom: 24px;
+  border-radius: 9px;
+  padding: 24px;
+  background-color: rgb(36, 37, 38);
+  width: 524px;
+}
+.auth-pic {
+  display: inline-flex;
+}
+.auth-pic img {
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+}
+.auth-details {
+  padding: 0 8px;
+}
+.auth-name {
+  color: #fff;
+  text-decoration: underline;
+  line-height: 2;
+  cursor: pointer;
+}
+.post-time {
+  font-size: small;
+  user-select: none;
+}
+
+.auth-title {
+  word-break: break-all;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  font-weight: 600;
+}
+.auth-post {
+  text-align: justify;
+}
+.post-details {
+  padding: 6px;
+}
+.col-3 {
+  padding: 24px;
+}
+
+.rank {
+  border-radius: 4px;
+  background-color: rgb(36, 37, 38);
+  padding: 24px;
+}
+.icon-top {
+  text-align: center;
+  color: rgb(255 0 0/0.6);
+  font-size: 20px;
+}
+.head {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: underline;
+  /* text-align: center; */
+}
+.side-border {
+  border-right: 3px solid rgb(0, 195, 255);
+  margin-right: 8px;
+  padding: 4px 0;
+  margin-left: 8px;
+}
+.authors {
+  display: flex;
+
+  margin: 16px 10px 0;
+  cursor: pointer;
+}
+.authors img {
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  margin-right: 6px;
+  color: #fff;
+}
+.authors input {
+  /* color: #545454; */
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
