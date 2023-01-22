@@ -5,8 +5,7 @@ session_start();
 if (!isset($_COOKIE['loginfo']) != true || $_SESSION['loggedin'] != true) {
   header('Location: ./pages');
   exit();
-}
-else if(!isset($_GET['id'])){
+} else if (!isset($_GET['id'])) {
   header('Location: ./');
   exit();
 }
@@ -33,9 +32,9 @@ if (isset($user_id) && !empty($user_id)) {
   };
   $email = $user['email'];
   // fetch user information
-$query = "SELECT * FROM  `user_info` WHERE `email` = '$email' ORDER BY user_info.id Desc";
-$result = $conn->query($query);
-$profile = $result->fetch_assoc();
+  $query = "SELECT * FROM  `user_info` WHERE `email` = '$email' ";
+  $result = $conn->query($query);
+  $profile = $result->fetch_assoc();
 }
 ?>
 <!DOCTYPE html>
@@ -75,7 +74,7 @@ $profile = $result->fetch_assoc();
                             echo "./backend/uploads/" . $profile['img_name'];
                           } else {
                             echo "./apple-touch-icon.png";
-                          } ?>" alt="profile_image"/>
+                          } ?>" alt="profile_image" />
               </div>
             </div>
             <div class="profInfo">
@@ -89,15 +88,16 @@ $profile = $result->fetch_assoc();
         </div>
         <div class="social_profile">
           <div class="social_fb icons">
-            <a href=""><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://facebook.com/<?php echo $profile['facebook'] ?>" target="_blank">
+              <i class="fa-brands fa-facebook"></i></a>
           </div>
           <div class="social_ig icons">
-            <a href="">
+            <a href="https://instagram.com/<?php echo $profile['instagram'] ?>" target="_blank">
               <i class="fa-brands fa-instagram"></i>
             </a>
           </div>
           <div class="social_twt icons">
-            <a href="">
+            <a href="https://twitter.com/<?php echo $profile['twitter'] ?>" target="_blank">
               <i class="fa-brands fa-twitter"></i>
             </a>
           </div>
@@ -127,6 +127,7 @@ $profile = $result->fetch_assoc();
 
     </div>
   </section>
+
 </body>
 
 </html>

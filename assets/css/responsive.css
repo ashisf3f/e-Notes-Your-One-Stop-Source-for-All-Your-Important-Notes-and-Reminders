@@ -146,6 +146,9 @@
     text-decoration: none;
     cursor: pointer;
   }
+  #dropActive {
+    padding: 0 3px;
+  }
   .profile-setting {
     display: block;
     line-height: 1.5;

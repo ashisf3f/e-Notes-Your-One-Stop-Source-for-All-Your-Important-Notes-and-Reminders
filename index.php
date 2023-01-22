@@ -8,7 +8,7 @@ if (!isset($_COOKIE['loginfo']) != true || $_SESSION['loggedin'] != true) {
 }
 $email = $_SESSION['email'];
 // gets profile image of cuurent logged in user
-$query = "SELECT img_name FROM  `user_info` WHERE `email` = '$email' ORDER BY user_info.id Desc";
+$query = "SELECT img_name FROM  `user_info` WHERE `email` = '$email'";
 $result = $conn->query($query);
 $profile = $result->fetch_assoc();
 ?>
@@ -149,7 +149,7 @@ Say something about yourself!</textarea>
               $result->fetch_array(MYSQLI_ASSOC)
             ) {
               $prof_email = $row['email'];
-              $query = "SELECT img_name FROM  `user_info` WHERE `email` = '$prof_email' ORDER BY user_info.id Desc";
+              $query = "SELECT img_name FROM  `user_info` WHERE `email` = '$prof_email' ";
               $result1 = $conn->query($query);
               $profile = $result1->fetch_assoc();
               echo ("
@@ -197,7 +197,7 @@ Say something about yourself!</textarea>
             if ($row['count'] >= $threshold) {
               $most_frequent_email = $row['email'];
               $prof_email =   $row['email'];
-              $query = "SELECT img_name FROM  `user_info` WHERE `email` = '$most_frequent_email' ORDER BY user_info.id Desc";
+              $query = "SELECT img_name FROM  `user_info` WHERE `email` = '$most_frequent_email' ";
               $result1 = $conn->query($query);
               $profile = $result1->fetch_assoc();
               // Execute the SQL query to retrieve user information

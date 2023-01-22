@@ -13,7 +13,7 @@ $result = $conn->query($sql);
 $user = $result->fetch_assoc();
 
 // fetch user information
-$query = "SELECT * FROM  `user_info` WHERE `email` = '$email' ORDER BY user_info.id Desc";
+$query = "SELECT * FROM  `user_info` WHERE `email` = '$email'";
 $result = $conn->query($query);
 $profile = $result->fetch_assoc();
 ?>
@@ -46,9 +46,11 @@ $profile = $result->fetch_assoc();
 
         <div class="testing-1 ">
           <div class="logout list">
+            <a href="../logout">
           <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span>
+          </a>
           </div>
-          <div class="edit list">
+          <div class="edit list" id="editp">
           <i class="fa-solid fa-pen-to-square"></i> <span>Edit profile</span>
           </div>
         </div>
@@ -81,15 +83,15 @@ $profile = $result->fetch_assoc();
         </div>
         <div class="social_profile">
           <div class="social_fb icons">
-            <a href=""><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://facebook.com/<?php echo $profile['facebook'] ?>" target="_blank"><i class="fa-brands fa-facebook"></i></a>
           </div>
           <div class="social_ig icons">
-            <a href="">
+            <a href="https://instagram.com/<?php echo $profile['instagram'] ?>" target="_blank">
               <i class="fa-brands fa-instagram"></i>
             </a>
           </div>
           <div class="social_twt icons">
-            <a href="">
+            <a href="https://twitter.com/<?php echo $profile['twitter'] ?>" target="_blank">
               <i class="fa-brands fa-twitter"></i>
             </a>
           </div>
@@ -120,11 +122,34 @@ $profile = $result->fetch_assoc();
         # code...
         echo "No Post found";
       }
-
       ?>
-
     </div>
   </section>
+    <!-- modal -->
+    <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="head">Edit Profile!</span>
+      <span class="close" id="closeMe">&times;</span>
+      <form action="./profedit" id="myForm" onsubmit="return validateProfile()" method="POST">
+        <div class="form-content">
+          <span class="from-title fb">Facebook</span>
+          <input type="text" id="facebook" maxlength="50" name="facebook" placeholder="Enter appropritate username of facebook" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space"  />
+        </div>
+        <div class="form-content">
+        <span class="from-title ig">Instagram</span>
+        <input type="text" id="instagram" maxlength="50" name="instagram" placeholder="Enter appropritate username of instagram" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space" />
+        </div>
+        <div class="form-content">
+        <span class="from-title tweet ">Twitter</span>
+        <input type="text" name="twitter" id="twitter" maxlength="50" placeholder="Enter appropritate username of twitter" />
+        </div>
+        <div class="form-error" id="formError">
+        </div>
+        <button type="submit" class="subBtn">Save</button>
+      </form>
+    </div>
+  </div>
 </body>
-
+<script src="../assets/js/editProf.js"></script>
 </html>

@@ -57,21 +57,43 @@ if (empty($filename)) {
         //   echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
     } else {
-        // Rename file
+        // check if the profile picture is null or not
+        $checkProf = "SELECT  `img_name` FROM `user_info` WHERE  `email` = '$email'";
+        $info = $conn->query($checkProf);
+        $checkImg = $info->fetch_assoc();
+        // rename file name
         $newfilename = md5($file_basename) . $file_ext;
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $newfilename)) {
-            // echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-            $sql = "INSERT INTO `user_info`( `img_name` , `email` , `username`) VALUES ('$newfilename', '$email' , '$username')";
-            $result = $conn->query($sql);
-            if ($result) {
-                header('Location: ../?upload success');
-                exit();
+
+        if ($checkImg['img_name'] === null) {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $newfilename)) {
+                $sql = "UPDATE  `user_info` SET `img_name` ='$newfilename', `username` = '$username' where `email` = '$email'";
+                $result = $conn->query($sql);
+                if ($result) {
+                    header('Location: ../?upload-success');
+                    exit();
+                } else {
+                    header('Location: ../?error=upload-failed-to-database');
+                    exit();
+                }
             } else {
-                header('Location: ../?error=upload-failed-to-database');
-                exit();
+                header('location: ../?error=Sorry-there-was-an-error-uploading-your-file.');
             }
         } else {
-            header('location: ../?error=Sorry-there-was-an-error-uploading-your-file.');
+            // upload image to folder
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $newfilename)) {
+                // update the img_name in databse 
+                $query  = "UPDATE `user_info` SET `img_name`='$newfilename' WHERE email = '$email'";
+                $result = $conn->query($query);
+                if ($result) {
+                    header('Location: ../?success');
+                } else {
+                    echo "failed";
+                }
+            } else {
+                header('Location: ../?error-uploading-image ');
+            }
         }
+
+        // Rename file
     }
 }

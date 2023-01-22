@@ -43,6 +43,8 @@
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
         // insert random number and submit form to sql database
         $sql = "INSERT INTO `sign_up`( `email`, `username`, `password`) VALUES ('$email','$username','$hashPassword') ";
+        $query = "INSERT INTO `user_info`(`email`) VALUES ('$email')";
+        $info = $conn->query($query);
         $result3 = $conn->query($sql);
         if ($result3) {
           header('location: ./sign-in.php');
