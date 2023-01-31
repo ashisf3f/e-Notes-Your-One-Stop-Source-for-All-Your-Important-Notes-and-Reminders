@@ -75,6 +75,7 @@ if (isset($user_id) && !empty($user_id)) {
                           } else {
                             echo "./apple-touch-icon.png";
                           } ?>" alt="profile_image" />
+              
               </div>
             </div>
             <div class="profInfo">
@@ -122,7 +123,7 @@ if (isset($user_id) && !empty($user_id)) {
                 <hr />
                 <div class='mainDet'>") . $row['postDet'] . ("</div>
             </div>
-                          ");
+");
       }; ?>
 
     </div>

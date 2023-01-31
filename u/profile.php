@@ -16,6 +16,11 @@ $user = $result->fetch_assoc();
 $query = "SELECT * FROM  `user_info` WHERE `email` = '$email'";
 $result = $conn->query($query);
 $profile = $result->fetch_assoc();
+
+// get current url
+$current_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$redirect = "http://localhost/testing/redirect?destination="
+
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +39,7 @@ $profile = $result->fetch_assoc();
   <!-- icons for web -->
   <script src="https://kit.fontawesome.com/4b2492399d.js" crossorigin="anonymous"></script>
   <link href="../assets/css/prof.css?key=<?php echo time(); ?>" type="text/css" rel="stylesheet" />
+  <link href="../assets/css/profileModal.css?php echo time(); ?>" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -47,11 +53,11 @@ $profile = $result->fetch_assoc();
         <div class="testing-1 ">
           <div class="logout list">
             <a href="../logout">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span>
-          </a>
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span>
+            </a>
           </div>
           <div class="edit list" id="editp">
-          <i class="fa-solid fa-pen-to-square"></i> <span>Edit profile</span>
+            <i class="fa-solid fa-pen-to-square"></i> <span>Edit profile</span>
           </div>
         </div>
       </div>
@@ -70,6 +76,9 @@ $profile = $result->fetch_assoc();
                           } else {
                             echo "../apple-touch-icon.png";
                           } ?>" alt="profile_image" />
+                <div class="editIcon">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </div>
               </div>
             </div>
             <div class="profInfo">
@@ -83,15 +92,15 @@ $profile = $result->fetch_assoc();
         </div>
         <div class="social_profile">
           <div class="social_fb icons">
-            <a href="https://facebook.com/<?php echo $profile['facebook'] ?>" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="<?php echo $redirect ?>https://www.facebook.com/<?php echo $profile['facebook'] ?>" target="_blank"><i class="fa-brands fa-facebook"></i></a>
           </div>
           <div class="social_ig icons">
-            <a href="https://instagram.com/<?php echo $profile['instagram'] ?>" target="_blank">
+            <a href="<?php echo $redirect ?>https://instagram.com/<?php echo $profile['instagram'] ?>" target="_blank">
               <i class="fa-brands fa-instagram"></i>
             </a>
           </div>
           <div class="social_twt icons">
-            <a href="https://twitter.com/<?php echo $profile['twitter'] ?>" target="_blank">
+            <a href="<?php echo $redirect ?>https://twitter.com/<?php echo $profile['twitter'] ?>" target="_blank">
               <i class="fa-brands fa-twitter"></i>
             </a>
           </div>
@@ -99,7 +108,6 @@ $profile = $result->fetch_assoc();
       </div>
     </div>
   </div>
-
   <header>Author Posts:</header>
   <section>
     <div class="authPosts">
@@ -125,8 +133,45 @@ $profile = $result->fetch_assoc();
       ?>
     </div>
   </section>
-    <!-- modal -->
-    <div id="myModal" class="modal">
+  <!-- modal2 -->
+  <div class="editBox" id="myBoxedit">
+    <div class="box-content">
+      <div class="close1" id="boxClose">&times;</div>
+      <div class="head">Change Profile Picture</div>
+      <form action="../backend/upload" method="post" enctype="multipart/form-data" onsubmit="">
+        <div class="form-content">
+          <form id="imageForm">
+            <div class="image-select">
+              <label for="fileInput">Upload Photo <i class="fa-regular fa-image"></i></label>
+              <input type="file" id="fileInput" name="file" />
+            </div>
+
+            <div class="image-preview" id="imagePreview"></div>
+            <div class="img-action">
+              <button type="submit">Save</button>
+              </div>
+          </form>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const imagePreview = document.getElementById("imagePreview");
+
+    fileInput.onchange = function() {
+      const file = this.files[0];
+      const reader = new FileReader();
+      reader.onload = function() {
+        imagePreview.style.backgroundImage = `url(${this.result})`;
+      };
+      reader.readAsDataURL(file);
+    };
+  </script>
+
+  <!-- modal -->
+  <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
       <span class="head">Edit Profile!</span>
@@ -134,15 +179,15 @@ $profile = $result->fetch_assoc();
       <form action="./profedit" id="myForm" onsubmit="return validateProfile()" method="POST">
         <div class="form-content">
           <span class="from-title fb">Facebook</span>
-          <input type="text" id="facebook" maxlength="50" name="facebook" placeholder="Enter appropritate username of facebook" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space"  />
+          <input type="text" id="facebook" maxlength="50" name="facebook" placeholder="Enter appropritate username of facebook" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space" />
         </div>
         <div class="form-content">
-        <span class="from-title ig">Instagram</span>
-        <input type="text" id="instagram" maxlength="50" name="instagram" placeholder="Enter appropritate username of instagram" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space" />
+          <span class="from-title ig">Instagram</span>
+          <input type="text" id="instagram" maxlength="50" name="instagram" placeholder="Enter appropritate username of instagram" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space" />
         </div>
         <div class="form-content">
-        <span class="from-title tweet ">Twitter</span>
-        <input type="text" name="twitter" id="twitter" maxlength="50" placeholder="Enter appropritate username of twitter" />
+          <span class="from-title tweet ">Twitter</span>
+          <input type="text" name="twitter" id="twitter" maxlength="50" placeholder="Enter appropritate username of twitter" />
         </div>
         <div class="form-error" id="formError">
         </div>
@@ -152,4 +197,5 @@ $profile = $result->fetch_assoc();
   </div>
 </body>
 <script src="../assets/js/editProf.js"></script>
+
 </html>

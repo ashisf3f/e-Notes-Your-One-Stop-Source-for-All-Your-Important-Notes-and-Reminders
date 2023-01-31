@@ -121,7 +121,7 @@ body {
 }
 .blurp {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 .profilePic {
   flex: none;
@@ -137,12 +137,28 @@ body {
   justify-content: center;
   border-radius: 8px;
 }
+.editIcon{
+  background-color: #121212;
+  padding: 4px;
+  border-radius: 50%;
+  /* color: #bb86fc; */
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: -8px;
+  z-index: 1;
+}
+.editIcon:hover{
+  transition: 0.2s ease-in-out;
+  background-color: rgb(18 18 18/0.6);
+  color: #bb86fc;
+
+}
 .profilePic img {
   height: 86px;
   width: 86px;
   border-radius: 50%;
 }
-
 .profInfo {
   flex: none;
   width: auto;
@@ -239,11 +255,18 @@ hr {
   text-align: justify;
 }
 
+
+.form-content input[type="file"]{
+  background-color: blue;
+  border: none;
+  color: white;
+}
+
 /* for modal */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 30;
   padding: 170px 10px 0;
   left: 0;
   top: 0;
@@ -358,11 +381,8 @@ hr {
     display: none;
   }
   .profilePic img {
-    height: 36px;
-    width: 36px;
-  }
-  .cnt4 h5 {
-    padding-top: 12px;
+    height: 56px;
+    width: 56px;
   }
   .cnt3 {
     margin-top: -26px;
