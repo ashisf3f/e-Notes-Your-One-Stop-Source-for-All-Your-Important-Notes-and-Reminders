@@ -1,0 +1,73 @@
+.topbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.35);
+    display: flex;
+    z-index: 30;
+    /* background-color: #fff; */
+    background-color: rgb(36, 37, 38);
+    justify-content: space-between;
+    padding: 12px 24px;
+  }
+  i{
+    cursor: pointer;
+    /* color: #ddd; */
+  }
+
+  .logo a{
+    color: #ddd;
+    text-decoration: none;
+  }
+  .user-name {
+    line-height: 1.5;
+    margin: 0 6px;
+    /* color: #000; */
+    color: #fff;
+    cursor: default;
+  }
+  .user-name a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .profile-menu {
+    display: flex;
+  }
+  .profile-menu img {
+    cursor: pointer;
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+  }
+  .profile-setting {
+    display: block;
+    line-height: 1.5;
+    /* margin-left: 12px; */
+    /* padding: 1px 3px; */
+  }
+
+  .drop-box {
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    background-color: black;
+    border-radius: 9px;
+    padding: 12px;
+    border: 1px solid rgb(0 0 0/0.3);
+  }
+  .drop-box > div{
+    margin-bottom: 4px;
+  }
+
+
+  @media (max-width: 768px) {
+      .list span{
+        display: none;
+      }
+      .main{
+        margin-top: 120px;
+      }
+  }
+ 

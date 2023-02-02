@@ -22,14 +22,14 @@ if (empty($filename)) {
         if ($check !== false) {
             $uploadOk = 1;
         } else {
-            header('location: ../?error=file-is-not-an-image');
+            header('location: ../u/?error=file-is-not-an-image');
             $uploadOk = 0;
         }
     }
 
     // Check if file already exists
     if (file_exists($target_file)) {
-        header('location: ../?error=Sorry-file-already-exists.');
+        header('location: ../u/?error=Sorry-file-already-exists.');
         //   echo "Sorry, file already exists.";
         $uploadOk = 0;
     }
@@ -44,16 +44,15 @@ if (empty($filename)) {
     // Allow certain file formats
     if (
         $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif"
     ) {
-        header('location: ../?error=Sorry-only-JPG-JPEG-PNG-&-GIF-files-are-allowed ');
+        header('location: ../u/?error=Sorry-only-JPG-JPEG-PNG-files-are-allowed ');
         //   echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
         $uploadOk = 0;
     }
 
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-        header('location: ../?error=Sorry-your-file-was-not-uploaded');
+        header('location: ../u/?error=Sorry-your-file-was-not-uploaded');
         //   echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
     } else {
@@ -69,14 +68,14 @@ if (empty($filename)) {
                 $sql = "UPDATE  `user_info` SET `img_name` ='$newfilename', `username` = '$username' where `email` = '$email'";
                 $result = $conn->query($sql);
                 if ($result) {
-                    header('Location: ../?upload-success');
+                    header('Location: ../u/');
                     exit();
                 } else {
-                    header('Location: ../?error=upload-failed-to-database');
+                    header('Location: ../u/?error=upload-failed-to-database');
                     exit();
                 }
             } else {
-                header('location: ../?error=Sorry-there-was-an-error-uploading-your-file.');
+                header('location: ../u/?error=Sorry-there-was-an-error-uploading-your-file.');
             }
         } else {
             // upload image to folder
@@ -85,12 +84,12 @@ if (empty($filename)) {
                 $query  = "UPDATE `user_info` SET `img_name`='$newfilename' WHERE email = '$email'";
                 $result = $conn->query($query);
                 if ($result) {
-                    header('Location: ../?success');
+                    header('Location: ../u/');
                 } else {
                     echo "failed";
                 }
             } else {
-                header('Location: ../?error-uploading-image ');
+                header('Location: ../u/?error-uploading-image ');
             }
         }
 

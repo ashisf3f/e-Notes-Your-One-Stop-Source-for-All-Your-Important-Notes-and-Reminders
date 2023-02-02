@@ -2,10 +2,21 @@
 // check if login is true or not
 session_start();
 require './backend/database/db.inc.php';
+$login = "SELECT * FROM `sign_up`";
+$checkResult = $conn->query($login);
+$logRow = $checkResult->num_rows;
 if (!isset($_COOKIE['loginfo']) != true || $_SESSION['loggedin'] != true) {
   header('Location: ./pages');
   exit();
 }
+if ($logRow < 1) {
+  session_unset();
+  session_destroy();
+  setcookie('loginfo', true, time() - 1);
+  header('Location: ./pages');
+  exit();
+}
+
 $email = $_SESSION['email'];
 // gets profile image of cuurent logged in user
 $query = "SELECT img_name FROM  `user_info` WHERE `email` = '$email'";
@@ -19,22 +30,23 @@ $profile = $result->fetch_assoc();
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- favicon -->
-    <link rel="shortcut icon" href="favicon.ico" />
-  <link rel="icon" type="image/png" href="favicon-16x16.png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <title>On Test</title>
+  <!-- favicon -->
+  <link rel="icon" type="image/png" sizes="120x120" href="notes-cloud-120.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="notes-cloud-96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="notes-cloud-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="notes-cloud-16.png">
+  <title>e-Notes: Your One-Stop Source for All Your Important Notes and Reminders</title>
   <!-- icons for web -->
   <script src="https://kit.fontawesome.com/4b2492399d.js" crossorigin="anonymous"></script>
   <link href="./assets/css/test.css?key=<?php echo time(); ?>" type="text/css" rel="stylesheet" />
-  <link rel="stylesheet" href="./assets/css/responsive.css" />
+  <link rel="stylesheet" href="./assets/css/responsive.css?key=<?php echo time(); ?>" />
 </head>
 
 <body>
+  <!-- topnarbar -->
   <div class="body-template">
-    <!-- topnarbar -->
     <div class="topbar">
-      <div class="logo">Ashis</div>
+      <div class="logo"> <a href="./">e-Notes </a></div>
       <div class="profile-menu">
         <div class="user-name">
           <a href="u/profile">
@@ -45,7 +57,7 @@ $profile = $result->fetch_assoc();
             <img src="<?php if (isset($profile['img_name'])) {
                         echo "./backend/uploads/" . $profile['img_name'];
                       } else {
-                        echo "./apple-touch-icon.png";
+                        echo "./assets/img/customer-80.png";
                       } ?>" alt="profile_picture" />
           </a>
         </div>
@@ -62,11 +74,30 @@ $profile = $result->fetch_assoc();
       </div>
     </div>
   </div>
+  <script>
+    const showDrop = () => {
+      let courses = document.getElementById("drop_list");
+      if (courses.style.display == "block") {
+        courses.style.display = "none";
+      } else {
+        courses.style.display = "block";
+      }
+    };
+
+    document.addEventListener("click", (event) => {
+      let options = document.getElementById("drop_list");
+      if (options.style.display === "block" && event.target.id !== "drop_active") {
+        options.style.display = "none";
+      }
+    });
+  </script>
+  <!-- mobilebtn to upload post -->
   <div class="fixed_btn" id="mobBtn">
     <i class="fa-solid fa-comment-medical"></i>
   </div>
-
+  <!-- main page divison -->
   <div class="cols">
+    <!-- left column -->
     <div class="col-1 left">
       <div class="actions">
         <div class="head">My Activity</div>
@@ -82,22 +113,21 @@ $profile = $result->fetch_assoc();
           <div class="head">Recent Activity</div>
           <?php
           // Execute the SQL query to retrieve most frequent emails
-          $checkStats = "SELECT `email`, COUNT(`email`) AS count FROM `posts` GROUP BY `email` ORDER BY count  LIMIT 4";
+          $checkStats = "SELECT `email`, COUNT(`email`) AS count FROM `posts` GROUP BY `email` ORDER BY posts.date ";
           $result = $conn->query($checkStats);
           $checkRow = $result->num_rows;
           if ($checkRow > 0) {
             while ($row = $result->fetch_assoc()) {
               $most_frequent_email = $row['email'];
               // Execute the SQL query to retrieve user information
-              $query = "SELECT  `title`, `author` FROM `posts` WHERE `email` = '$most_frequent_email' ORDER BY post_id  DESC  LIMIT 3";
+              $query = "SELECT  `title`, `author` FROM `posts` WHERE `email` = '$most_frequent_email' ORDER BY post_id desc  LIMIT 1";
               $result2 = $conn->query($query);
               while ($user = $result2->fetch_assoc()) {
                 echo ("
                     <div class='recent-details'>
                       <div class='recent-title'>
-                        <span class='side-border'></span>
-                        Title:
-                        <span class='rt'>") . $user['title'] . ("</span>
+                      <i class='fa-solid fa-retweet'></i> 
+                        <div class='rt'>") . $user['title'] . ("</div>
                       </div>
                       <div class='recent-author'>
                         <span class='ra'>author:</span>") . $user['author'] . ("
@@ -113,6 +143,7 @@ $profile = $result->fetch_assoc();
         </div>
       </div>
     </div>
+    <!-- center column -->
     <div class="col-2 center">
       <div class="meta">
         <div class="meta-upload">
@@ -120,17 +151,17 @@ $profile = $result->fetch_assoc();
             <img src="<?php if (isset($profile['img_name'])) {
                         echo "./backend/uploads/" . $profile['img_name'];
                       } else {
-                        echo "./apple-touch-icon.png";
-                      } ?>" alt="" srcset="" />
+                        echo "./assets/img/customer-80.png";
+                      } ?>" alt="" />
           </div>
           <div class="upload-details">
             <form action="./uploadPost" onsubmit="return postValidate()" method="post">
               <!-- <label for="input-title"></label> -->
               <div class="upload-content title">
-                <input type="text" name="title" maxlength="30" pattern="[a-zA-Z0-9 ]+" title="Only alphabets and numbers are allowed." placeholder="Title" id="postTitle" />
+                <input type="text" name="title" maxlength="48" pattern="[a-zA-Z0-9 ]+" title="Only alphabets and numbers are allowed." placeholder="Title" id="postTitle" />
               </div>
               <div class="upload-content story">
-                <textarea type="text" id="postDet" name="postDet" maxlength="360">
+                <textarea type="text" id="postDet" name="postDet" maxlength="420">
 Say something about yourself!</textarea>
               </div>
               <div class="sub-btn">
@@ -148,24 +179,45 @@ Say something about yourself!</textarea>
             while ($row =
               $result->fetch_array(MYSQLI_ASSOC)
             ) {
+              $post_id = $row['post_id'];
               $prof_email = $row['email'];
-              $query = "SELECT img_name FROM  `user_info` WHERE `email` = '$prof_email' ";
+              $query = "SELECT * FROM  `user_info` WHERE `email` = '$prof_email' ";
               $result1 = $conn->query($query);
               $profile = $result1->fetch_assoc();
+              // fetch user id form singup
+
+              $sqlId  = "SELECT `id` FROM `sign_up` WHERE `email`='$prof_email'";
+              $resuldId = $conn->query($sqlId);
+              $fetchedId = $resuldId->fetch_assoc();
               echo ("
+              
               <div class='post'>
-                <div class='auth-pic'>
+                <div class='post-info'>
+                 <div class='auth-pic'>
                   <img src='");
               if (isset($profile['img_name'])) {
                 echo './backend/uploads/' . $profile['img_name'];
               } else {
-                echo './apple-touch-icon.png';
+                echo "./assets/img/customer-80.png";
               }
               echo (" '/>
                   <div class='auth-details'>
-                    <span class='auth-name'>") . $row['author'] .  (" </span>
+                  <form action= './profile' method='get'>
+                    <input type='hidden' name='id' value='" . $fetchedId['id'] . "'>
+                    <span class='auth-name'>  <input type='submit' name='author' value='" . $row['author'] . "' /> </span>
+                  </form>
+                   </span>
                     <div class='post-time'>") . $row['date'] . ("</div>
                   </div>
+                   </div>
+                   <div>
+                </div>
+                  <div class='post-manager'> 
+                    <div class='dwnld'>
+                    <a href='downloadpost?postId=$post_id'>
+                    <i class='fa-solid fa-cloud-arrow-down' id='downloadButton'></i> </a>
+                    </div>
+                   </div>
                 </div>
                 <div class='auth-title post-details'>
                 ") . $row['title'] . ("</div>
@@ -173,6 +225,7 @@ Say something about yourself!</textarea>
                 $row['postDet'] . ("
                 </div>
               </div>
+
 ");
             }
           } else {
@@ -182,6 +235,7 @@ Say something about yourself!</textarea>
         </div>
       </div>
     </div>
+    <!-- right column -->
     <div class="col-3 right">
       <div class="rank">
         <div class="icon-top"><i class="fa-solid fa-ranking-star"></i></div>
@@ -221,6 +275,9 @@ Say something about yourself!</textarea>
                   </form>");
               }
             }
+            else{
+              echo ("<div style='margin-top: 12px;'> only few notes</div>");
+            }
           }
         } else {
           echo ("<div style='margin-top: 12px;'> No any author found!</div>");
@@ -237,18 +294,18 @@ Say something about yourself!</textarea>
       <span class="close">&times;</span>
       <form action="./uploadPost" id="myForm" onsubmit="return postValidate1()" method="POST">
         <div class="form-content">
-          <input type="text" id="postTitle1" maxlength="30" name="title" placeholder="Title" required />
+          <input type="text" id="postTitle1" maxlength="48" name="title" placeholder="Title" required />
         </div>
         <div class="form-content">
-          <textarea maxlength="360" name="postDet" id="postDet1"></textarea>
+          <textarea maxlength="420" name="postDet" id="postDet1"></textarea>
         </div>
         <button type="submit" class="subBtn">Post</button>
       </form>
     </div>
   </div>
 </body>
-<script src="./assets/js/dropbox.js"></script>
 <script src="./assets/js/modalBox.js"></script>
 <script src="./assets/js/postValidate.js"></script>
+<script src="./assets/js/dwnloadPost.js"></script>
 
 </html>

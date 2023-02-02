@@ -1,25 +1,13 @@
 footer {
   padding: 36px 0px 16px 0px;
-  /* margin-left: 32px; */
 }
 .container3 {
   display: block;
   justify-content: center;
   width: 100%;
-  /* flex-wrap: wrap; */
-  /* width: 0px -12px; */
+
 }
 
-.foot1 {
-  text-align: center;
-  /* width: 100%; */
-  padding: 0px 12px;
-}
-.foot1 a {
-  margin-bottom: 8px;
-  margin-left: 0.625rem;
-  margin-right: 0.5rem;
-}
 .foot2 {
   padding-top: 10px;
 

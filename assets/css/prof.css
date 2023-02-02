@@ -37,20 +37,10 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.backBtn a {
-  padding: 0 36px;
-  text-decoration: none;
-  color: #03dac6;
-  font-style: initial;
-  font-family: cursive;
-}
 .main {
-  position: relative;
-  padding-top: 16px;
+  margin-top: 69px;
   height: 100%;
   padding-bottom: 24px;
-  /* background-color: #fff; */
-  /* background-color: #3b3b3b; */
 }
 .cnt1 {
   width: 100%;
@@ -61,7 +51,7 @@ body {
 .testing {
   position: absolute;
   right: 36px;
-  z-index: 30;
+  z-index: 1;
   background-color: transparent;
   margin-top: 8px;
 }
@@ -78,30 +68,7 @@ body {
   text-decoration: none;
   color: rgba(255, 255, 255, 0.6);
 }
-.cnt2 {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 0px;
-  overflow: hidden;
-  background-position: center;
-  background-size: cover;
-  border-radius: 16px;
-}
-.cnt2 img {
-  position: relative;
-  opacity: 0.7;
-  width: 100%;
-  user-select: none;
-}
-.cnt2 span {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  opacity: 0.6;
-}
+
 
 .cnt3 {
   position: relative;
@@ -109,7 +76,7 @@ body {
   justify-content: space-between;
   min-width: none;
   padding: 16px;
-  margin: -64px 24px 0 24px;
+  margin: 0 24px 0 24px;
   overflow: hidden;
   word-break: break-all;
   border: 0px;
@@ -121,7 +88,6 @@ body {
 }
 .blurp {
   display: flex;
-  /* flex-wrap: wrap; */
 }
 .profilePic {
   flex: none;
@@ -141,7 +107,6 @@ body {
   background-color: #121212;
   padding: 4px;
   border-radius: 50%;
-  /* color: #bb86fc; */
   cursor: pointer;
   position: absolute;
   top: 16px;
@@ -210,8 +175,6 @@ header {
 /* posts */
 
 .authPosts {
-  /* background-color: #3b3b3b; */
-
   word-break: break-all;
   display: flex;
   flex-direction: row;
@@ -221,7 +184,6 @@ header {
 }
 .mainCnt1 {
   margin: 10px;
-  /* flex-basis: 31%; */
   width: 400px;
   background-color: rgb(36, 37, 38);
   border-radius: 6px;
@@ -232,10 +194,8 @@ header {
   color: #fff;
   font-family: monospace;
   font-size: 18px;
-  /* font-family: Arial, Helvetica, sans-serif; */
   cursor: default;
   font-weight: 600;
-  /* margin-top: 36px ; */
 }
 hr {
   margin-top: 4px;
@@ -244,12 +204,10 @@ hr {
 }
 
 .title {
-  /* color: #fff; */
   font-size: 18px;
   padding: 4px 3px;
 }
 .mainDet {
-  /* color: #fff; */
   font-size: 17px;
   padding: 4px 3px;
   text-align: justify;
@@ -303,7 +261,8 @@ hr {
   color: #fff;
 }
 .form-content input {
-  font-family: cursive;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
   background-color: #000;
   font-weight: 400;
   color: #fff;
@@ -380,6 +339,7 @@ hr {
   .list > span {
     display: none;
   }
+  
   .profilePic img {
     height: 56px;
     width: 56px;
@@ -393,5 +353,8 @@ hr {
   }
   .modal-content {
     width: 100%;
+  }
+  .drop-box hr{
+    margin:12px 0 8px ;
   }
 }

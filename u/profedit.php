@@ -24,26 +24,42 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             exit();
         }
     }
-    else if (empty($facebook) && empty($instagram)) {
-        $sql = "UPDATE `user_info` SET `twitter` = '$twitter' WHERE `email` = '$email'";
+    else if(empty($facebook) || empty($instagram) || empty($twitter)){
+        
+     if (empty($facebook)) {
+        $sql = "UPDATE `user_info` SET `facebook` = null , `instagram`='$instagram' ,`twitter` = '$twitter' WHERE `email` = '$email'";
         $result = $conn->query($sql);
         if ($result) {
             header("location: ./profile?success");
             exit();
         }
-    } else if (empty($instagram) && empty($twitter)) {
-        $sql = "UPDATE `user_info` SET `facebook` = '$facebook' WHERE `email` = '$email'";
+    } 
+     if (empty($twitter)) {
+        $sql = "UPDATE `user_info` SET `facebook` = '$facebook' , `instagram`='$instagram' ,`twitter` = null WHERE `email` = '$email'";
         $result = $conn->query($sql);
         if ($result) {
             header("location: ./profile?success");
             exit();
         }
-    } else if (empty($facebook) && empty($twitter)) {
-        $sql = "UPDATE `user_info` SET `instagram` = '$instagram' WHERE `email` = '$email'";
+    } 
+     if (empty($instagram)) {
+        $sql = "UPDATE `user_info` SET `facebook` = '$facebook' , `instagram`=null ,`twitter` = '$twitter' WHERE `email` = '$email'";
         $result = $conn->query($sql);
         if ($result) {
             header("location: ./profile?success");
             exit();
         }
+    } 
+}else {
+    $sql = "UPDATE `user_info` SET `facebook` = '$facebook' , `instagram`='$instagram' ,`twitter` = '$twitter' WHERE `email` = '$email'";
+    $result = $conn->query($sql);
+    if ($result) {
+        header("location: ./profile?success");
+        exit();
     }
+    
+}
+} else{
+    header('location: ./profile?server-error');
+    exit();
 }

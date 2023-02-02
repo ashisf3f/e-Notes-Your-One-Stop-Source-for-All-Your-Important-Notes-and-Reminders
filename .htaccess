@@ -14,3 +14,5 @@ RewriteRule ^ %{REQUEST_URI}.html [NC,L]
 
 RewriteCond %{QUERY_STRING} ^user_id=([^&]+)&(.*)$
 RewriteRule ^profile$ /profile/%2 [NC,L,R]
+
+

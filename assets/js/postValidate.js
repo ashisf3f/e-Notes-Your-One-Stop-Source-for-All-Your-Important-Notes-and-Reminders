@@ -20,10 +20,15 @@ const postValidate = () => {
     alert(`${error}`);
     document.getElementById("postTitle").focus();
     return false;
-  } else if (postTitle.length > 30) {
-    error = "Title should be short and sweet!";
+  } else if (postTitle.length > 48) {
+    error = "Title should be short and sweet! (48 characters)";
     alert(`${error}`);
     document.getElementById("postTitle").focus();
+    return false;
+  }else if (postDetails.length > 420){
+    error = "Your description is too long shorten abit!";
+    alert(`${error}`);
+    document.getElementById("postDet").focus();
     return false;
   }
 };
@@ -49,10 +54,15 @@ const postValidate1 = () => {
     alert(`${error}`);
     document.getElementById("postTitle1").focus();
     return false;
-  } else if (postTitle1.length > 30)   {
-    error = "Title should be short and sweet!";
+  } else if (postTitle1.length > 48)   {
+    error = "Title should be short and sweet! (48 characters)";
     alert(`${error}`);
     document.getElementById("postTitle1").focus();
+    return false;
+  }else if (postDetails1.length > 420){
+    error = "Your description is too long shorten abit!";
+    alert(`${error}`);
+    document.getElementById("postDet1").focus();
     return false;
   }
 };

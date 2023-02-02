@@ -12,7 +12,7 @@ if (!isset($_COOKIE['loginfo']) != true || $_SESSION['loggedin'] != true) {
 
 // Retrieve the user_id from the query string
 
-$_GET['username'];
+$_GET['author'];
 $user_id = $_GET['id'];
 // echo $user_id;
 
@@ -23,7 +23,7 @@ if (isset($user_id) && !empty($user_id)) {
   // Connect to the database
 
   // Execute the SQL query to retrieve user information
-  $query = "SELECT `username`, `email` FROM `sign_up` WHERE `id` = $user_id";
+  $query = "SELECT   `username`, `email` FROM `sign_up` WHERE `id` = $user_id";
   $result = $conn->query($query);
   if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
@@ -35,6 +35,7 @@ if (isset($user_id) && !empty($user_id)) {
   $query = "SELECT * FROM  `user_info` WHERE `email` = '$email' ";
   $result = $conn->query($query);
   $profile = $result->fetch_assoc();
+  $redirect = "http://localhost/testing/redirect?destination=";
 }
 ?>
 <!DOCTYPE html>
@@ -44,28 +45,64 @@ if (isset($user_id) && !empty($user_id)) {
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <title><?php echo $user['username']   ?> | Testing</title> -->
-  <title>Ashisf2f | Testing</title>
   <!-- favicon -->
-  <link rel="shortcut icon" href="favicon.ico" />
-  <link rel="icon" type="image/png" href="favicon-16x16.png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="120x120" href="notes-cloud-120.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="notes-cloud-96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="notes-cloud-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="notes-cloud-16.png">
+
+  <title><?php echo $user['username']   ?> | e-Notes</title>
   <!-- icons for web -->
   <script src="https://kit.fontawesome.com/4b2492399d.js" crossorigin="anonymous"></script>
   <link href="./assets/css/prof.css?key=<?php echo time(); ?>" type="text/css" rel="stylesheet" />
+  <link href="./assets/css/navbar.css?<?php echo time(); ?>" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-  <div class="backBtn">
-    <a href="./"> <i class="fa-solid fa-arrow-left"></i>Go back </a>
+  <!-- topnavbar -->
+  <div class="body-template">
+    <div class="topbar">
+      <div class="logo"> <a href="./">e-Notes</a></div>
+      <div class="profile-menu">
+        <div class="user-name">
+          <a href="u/profile">
+            <?php echo $_SESSION['username'] ?></a>
+        </div>
+        <div class="profile-setting">
+          <i class="fa-solid fa-gear" id="drop_active" onclick="showDrop()"></i>
+          <div class="drop-box" id="drop_list">
+            <div class="logout">
+              <div class="up-arrow"></div>
+              <a href="./logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  <script>
+    const showDrop = () => {
+      let options = document.getElementById("drop_list");
+      if (options.style.display === "block") {
+        options.style.display = "none";
+      } else {
+        options.style.display = "block";
+      }
+    };
+
+    document.addEventListener("click", (event) => {
+      let options = document.getElementById("drop_list");
+      if (options.style.display === "block" && event.target.id !== "drop_active") {
+        options.style.display = "none";
+      }
+    });
+  </script>
+<!-- user info -->
   <div class="main">
     <div class="cnt1">
-      <div class="cnt2">
-        <img src="curved0.jpg" alt="background image profile" />
-        <span></span>
-      </div>
       <div class="cnt3">
+        <!-- profile -->
         <div class="">
           <div class="blurp">
             <div class="profilePic">
@@ -73,9 +110,8 @@ if (isset($user_id) && !empty($user_id)) {
                 <img src="<?php if (isset($profile['img_name'])) {
                             echo "./backend/uploads/" . $profile['img_name'];
                           } else {
-                            echo "./apple-touch-icon.png";
+                            echo "./assets/img/customer-80.png";
                           } ?>" alt="profile_image" />
-              
               </div>
             </div>
             <div class="profInfo">
@@ -87,18 +123,19 @@ if (isset($user_id) && !empty($user_id)) {
             </div>
           </div>
         </div>
+        <!-- social media -->
         <div class="social_profile">
           <div class="social_fb icons">
-            <a href="https://facebook.com/<?php echo $profile['facebook'] ?>" target="_blank">
+            <a href="<?php echo $redirect ?>https://facebook.com/<?php echo $profile['facebook'] ?>" target="_blank">
               <i class="fa-brands fa-facebook"></i></a>
           </div>
           <div class="social_ig icons">
-            <a href="https://instagram.com/<?php echo $profile['instagram'] ?>" target="_blank">
+            <a href="<?php echo $redirect ?>https://instagram.com/<?php echo $profile['instagram'] ?>" target="_blank">
               <i class="fa-brands fa-instagram"></i>
             </a>
           </div>
           <div class="social_twt icons">
-            <a href="https://twitter.com/<?php echo $profile['twitter'] ?>" target="_blank">
+            <a href="<?php echo $redirect ?>https://twitter.com/<?php echo $profile['twitter'] ?>" target="_blank">
               <i class="fa-brands fa-twitter"></i>
             </a>
           </div>
@@ -107,9 +144,9 @@ if (isset($user_id) && !empty($user_id)) {
     </div>
   </div>
   <header>Author Posts:</header>
+  <!-- author post -->
   <section>
     <div class="authPosts">
-
       <?php
       $email  = $user['email'];
       require './backend/database/db.inc.php';
@@ -125,10 +162,9 @@ if (isset($user_id) && !empty($user_id)) {
             </div>
 ");
       }; ?>
-
     </div>
   </section>
-
+  <!-- end here -->
 </body>
 
 </html>

@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+html{
+  scroll-behavior: smooth;
+}
 body {
   /* color: #545454; */
   color: rgba(255, 255, 255, 0.6);
@@ -23,6 +26,17 @@ body::-webkit-scrollbar-thumb {
   border: 1px solid rgb(0 0 0 /0.2);
 }
 
+textarea::-webkit-scrollbar{
+  width: 3px;
+}
+textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+textarea::-webkit-scrollbar-thumb {
+  background-color: #cde0e2;
+  border-radius: 4px;
+  border: 1px solid rgb(0 0 0 /0.2);
+}
 .topbar {
   width: 100%;
   position: fixed;
@@ -33,6 +47,10 @@ body::-webkit-scrollbar-thumb {
   background-color: rgb(36, 37, 38);
   justify-content: space-between;
   padding: 12px 24px;
+}
+.logo a{
+  color: #ddd;
+  text-decoration: none;
 }
 .user-name {
   line-height: 1.5;
@@ -73,7 +91,9 @@ body::-webkit-scrollbar-thumb {
   justify-content: space-around;
 }
 .col-1 {
+  max-width: 340px;
   padding: 26px;
+  width: 100%;
 }
 .actions {
   /* text-align: center; */
@@ -108,13 +128,21 @@ body::-webkit-scrollbar-thumb {
 .recent-details {
   word-break: break-all;
   width: 100%;
-  color: #fff;
+  color: #ddd;
   margin-top: 16px;
   margin-bottom: 24px;
+}
+.recent-title{
+  display: flex;
+  
+}
+.recent-title i{
+  padding: 0 3px;
 }
 
 .rt {
   text-decoration: underline;
+  text-align: justify;
 }
 .recent-author {
   font-size: small;
@@ -198,6 +226,10 @@ textarea {
   background-color: rgb(36, 37, 38);
   width: 524px;
 }
+.post-info{
+  display: flex;
+  justify-content: space-between;
+}
 .auth-pic {
   display: inline-flex;
 }
@@ -209,7 +241,11 @@ textarea {
 .auth-details {
   padding: 0 8px;
 }
-.auth-name {
+.auth-name input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+
   color: #fff;
   text-decoration: underline;
   line-height: 2;
@@ -219,6 +255,20 @@ textarea {
   font-size: small;
   user-select: none;
 }
+.dwnld a{
+  text-decoration: none;
+  color: #ddd;
+}
+.dwnld i{
+  cursor: pointer;
+  padding: 5px 3px;
+  border-radius: 50%;
+
+}
+.dwnld i:hover{
+  transition: 0.3s ease-out;
+  background-color: #545454;
+}
 
 .auth-title {
   word-break: break-all;
@@ -227,6 +277,7 @@ textarea {
   font-weight: 600;
 }
 .auth-post {
+  word-break: break-all;
   text-align: justify;
 }
 .post-details {

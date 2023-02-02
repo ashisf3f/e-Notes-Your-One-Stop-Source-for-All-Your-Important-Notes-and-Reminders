@@ -1,3 +1,8 @@
+<!-- copyright 2023 -->
+
+
+
+
 <?php
 session_start();
 if (!isset($_COOKIE['loginfo']) != true || $_SESSION['loggedin'] != true) {
@@ -17,8 +22,6 @@ $query = "SELECT * FROM  `user_info` WHERE `email` = '$email'";
 $result = $conn->query($query);
 $profile = $result->fetch_assoc();
 
-// get current url
-$current_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $redirect = "http://localhost/testing/redirect?destination="
 
 ?>
@@ -31,42 +34,69 @@ $redirect = "http://localhost/testing/redirect?destination="
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <title>Document</title> -->
-  <title> <?php echo $user['username']  ?> | Testing</title>
+  <title> <?php echo $user['username']  ?> | e-Notes</title>
   <!-- favicon -->
-  <link rel="shortcut icon" href="../favicon.ico" />
-  <link rel="icon" type="image/png" href="../favicon-16x16.png" />
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="120x120" href="../notes-cloud-120.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../notes-cloud-96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../notes-cloud-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../notes-cloud-16.png">
   <!-- icons for web -->
   <script src="https://kit.fontawesome.com/4b2492399d.js" crossorigin="anonymous"></script>
+  <!-- styling -->
   <link href="../assets/css/prof.css?key=<?php echo time(); ?>" type="text/css" rel="stylesheet" />
-  <link href="../assets/css/profileModal.css?php echo time(); ?>" type="text/css" rel="stylesheet" />
+  <link href="../assets/css/profileModal.css?<?php echo time(); ?>" type="text/css" rel="stylesheet" />
+  <link href="../assets/css/navbar.css?<?php echo time(); ?>" type="text/css" rel="stylesheet" />
+
 </head>
 
-<body>
-  <div class="backBtn">
-    <a href="../"><i class="fa-solid fa-arrow-left"></i> Go back </a>
-  </div>
-  <div class="main">
-    <div class="cnt1">
-      <div class="testing">
 
-        <div class="testing-1 ">
-          <div class="logout list">
-            <a href="../logout">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span>
-            </a>
-          </div>
-          <div class="edit list" id="editp">
-            <i class="fa-solid fa-pen-to-square"></i> <span>Edit profile</span>
+<body>
+  <!-- topnavbar -->
+  <div class="body-template">
+    <div class="topbar">
+      <div class="logo"> <a href="../">e-Notes</a></div>
+      <div class="profile-menu">
+        <div class="header-setting">
+          <i class="fa-solid fa-gear" id="drop_active" onclick="showDrop()"></i>
+        </div>
+        <div class="profile-setting">
+          <div class="drop-box" id="drop_list">
+            <div class="edit list" id="openEdit">
+              <i class="fa-solid fa-pen-to-square"></i> <span> Edit profile</span>
+            </div>
+            <hr>
+            <div class="logout list">
+              <a href="../logout">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="cnt2">
-        <img src="../curved0.jpg" alt="background image profile" />
-
-        <span></span>
-      </div>
-      <div class="cnt3">
+      <script>
+        const showDrop = () => {
+          let options = document.getElementById("drop_list");
+          if (options.style.display == "block") {
+            options.style.display = "none";
+          } else {
+            options.style.display = "block";
+          };
+        };
+        document.addEventListener("click", (event) => {
+          let options = document.getElementById("drop_list");
+          if (options.style.display === "block" && event.target.id !== "drop_active") {
+            options.style.display = "none";
+          }
+        });
+      </script>
+    </div>
+  </div>
+  </div>
+<!-- user info -->
+  <div class="main">
+    <div class="cnt1">
+        <div class="cnt3">
+          <!-- profile  -->
         <div class="">
           <div class="blurp">
             <div class="profilePic">
@@ -74,10 +104,10 @@ $redirect = "http://localhost/testing/redirect?destination="
                 <img src="<?php if (isset($profile['img_name'])) {
                             echo "../backend/uploads/" . $profile['img_name'];
                           } else {
-                            echo "../apple-touch-icon.png";
+                            echo "../assets/img/customer-80.png";
                           } ?>" alt="profile_image" />
                 <div class="editIcon">
-                  <i class="fa-regular fa-pen-to-square"></i>
+                  <i class="fa-regular fa-pen-to-square" id="showEditBox"></i>
                 </div>
               </div>
             </div>
@@ -90,6 +120,7 @@ $redirect = "http://localhost/testing/redirect?destination="
             </div>
           </div>
         </div>
+<!-- social media -->
         <div class="social_profile">
           <div class="social_fb icons">
             <a href="<?php echo $redirect ?>https://www.facebook.com/<?php echo $profile['facebook'] ?>" target="_blank"><i class="fa-brands fa-facebook"></i></a>
@@ -109,9 +140,9 @@ $redirect = "http://localhost/testing/redirect?destination="
     </div>
   </div>
   <header>Author Posts:</header>
+  <!-- post secion -->
   <section>
     <div class="authPosts">
-
       <?php
       $sql = "SELECT * FROM `posts` WHERE `email`= '$email'  ORDER BY `posts`.`post_id` DESC";
       $result = $conn->query($sql);
@@ -127,13 +158,12 @@ $redirect = "http://localhost/testing/redirect?destination="
                         ");
         }
       } else {
-        # code...
         echo "No Post found";
       }
       ?>
     </div>
   </section>
-  <!-- modal2 -->
+  <!-- modal for photo upload-->
   <div class="editBox" id="myBoxedit">
     <div class="box-content">
       <div class="close1" id="boxClose">&times;</div>
@@ -143,16 +173,15 @@ $redirect = "http://localhost/testing/redirect?destination="
           <form id="imageForm">
             <div class="image-select">
               <label for="fileInput">Upload Photo <i class="fa-regular fa-image"></i></label>
-              <input type="file" id="fileInput" name="file" />
+              <input type="file" name="fileToUpload" id="fileInput" />
             </div>
-
             <div class="image-preview" id="imagePreview"></div>
             <div class="img-action">
               <button type="submit">Save</button>
-              </div>
+              <span onclick="closeModal()">Cancel</span>
+            </div>
           </form>
         </div>
-
       </form>
     </div>
   </div>
@@ -170,7 +199,7 @@ $redirect = "http://localhost/testing/redirect?destination="
     };
   </script>
 
-  <!-- modal -->
+  <!-- modal for profile edit -->
   <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
@@ -179,15 +208,15 @@ $redirect = "http://localhost/testing/redirect?destination="
       <form action="./profedit" id="myForm" onsubmit="return validateProfile()" method="POST">
         <div class="form-content">
           <span class="from-title fb">Facebook</span>
-          <input type="text" id="facebook" maxlength="50" name="facebook" placeholder="Enter appropritate username of facebook" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space" />
+          <input type="text" id="facebook" maxlength="50" name="facebook" placeholder="Enter appropritate username of facebook" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space" value="<?php if(isset($profile['facebook'])){ echo $profile['facebook']; } ?>"/>
         </div>
         <div class="form-content">
           <span class="from-title ig">Instagram</span>
-          <input type="text" id="instagram" maxlength="50" name="instagram" placeholder="Enter appropritate username of instagram" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space" />
+          <input type="text" id="instagram" maxlength="50" name="instagram" placeholder="Enter appropritate username of instagram" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space" value="<?php if(isset($profile['facebook'])){ echo $profile['instagram']; } ?>" />
         </div>
         <div class="form-content">
           <span class="from-title tweet ">Twitter</span>
-          <input type="text" name="twitter" id="twitter" maxlength="50" placeholder="Enter appropritate username of twitter" />
+          <input type="text" name="twitter" id="twitter" maxlength="50" placeholder="Enter appropritate username of twitter" pattern="^[a-z0-9]+([.][a-z0-9]+)*$" title="only lowercase letters are allowed and no any space" value="<?php if(isset($profile['facebook'])){ echo $profile['twitter']; } ?>" />
         </div>
         <div class="form-error" id="formError">
         </div>
@@ -197,5 +226,6 @@ $redirect = "http://localhost/testing/redirect?destination="
   </div>
 </body>
 <script src="../assets/js/editProf.js"></script>
+<script src="../assets/js/profileImg.js"></script>
 
 </html>
