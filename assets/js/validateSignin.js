@@ -2,26 +2,48 @@ window.onload = () => {
   // focuses the email input box on window loading
   document.getElementById("email").focus();
 };
+const form = document.getElementById("signinForm");
 
-const validateSys = () => {
-  let error = "";
-  let showError = document.getElementById("passError");
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
+form.addEventListener("submit", (event) => {
+  let errorMessage = document.getElementById("errorMessage");
+  event.preventDefault();
+
+  let email = form.email.value;
+  let password = form.password.value;
 
   // check if the email is valid
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-    // check if the passowrd is at least 8 character or not
-    if (password.length < 8) {
-      error = "Password must be at least 8 character long";
-      showError.innerHTML = error;
-      document.getElementById("password").focus();
-      return false;
-    }
+    const data = {
+      email,
+      password,
+    };
+    fetch("./signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (
+          // check if the data received header is valid or not
+          response.headers.get("Content-Type").indexOf("application/json") !==
+          -1
+        ) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        // process the response
+        if (data.error) {
+          errorMessage.innerHTML = data.error;
+        }
+        if (data.redirect) {
+          window.location.href = "../";
+        }
+      });
   } else {
-    error = "Please enter a valid email";
-    showError.innerHTML = error;
+    errorMessage.innerHTML = "Enter a valid email address";
     document.getElementById("email").focus();
-    return false;
   }
-};
+});

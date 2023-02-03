@@ -1,179 +1,112 @@
- <?php
-      require '../backend/database/db.inc.php';
+  <?php
+  // check if aldready logged in or not
+  session_start();
+  if (isset($_SESSION['loggedin']) == true) {
+    header('location: ../');
+    exit;
+  }
+  ?>
 
-      $showAlert = 0;
-      $error  = 0;
-      $loggedin = 0;
+  <!DOCTYPE html>
+  <html lang="en">
 
-      if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        $userEmail = $_POST['email'];
-        $userPass = $_POST['password'];
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=2,maximum-scale=1" />
+    <meta name="description" content="School project for college, college project for school, school project for high school and school project for university.">
+    <!-- favicon -->
+    <link rel="icon" type="image/png" sizes="120x120" href="../notes-cloud-120.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../notes-cloud-96.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../notes-cloud-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../notes-cloud-16.png">
+    <title>SignIn | e-Notes</title>
+    <!-- box Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <!-- Main Styling -->
 
-        if (empty($userEmail)) {
-          $showAlert = true;
-          $error = "Enter Your Email !";
-        } else if (empty($userPass)) {
-          $showAlert = true;
-          $error = "Enter Your Password";
-        } else {
+    <link rel="stylesheet" href="../assets/css/styles.css?key=<?php echo time(); ?>" />
+    <link rel="stylesheet" href="../assets/css/footer.css?key=<?php echo time(); ?>" />
+  </head>
 
-          // check if user is available or not
-          $checkExist = "SELECT * from sign_up Where   Email='$userEmail'";
-          $result = $conn->query($checkExist);
-          $checkStatus = $result-> num_rows;
+  <body>
+    <div class="alertbox">
+    </div>
+    <div class="container">
+      <div class="main">
+        <div class="cnt1">
+          <!-- Navbar -->
+          <nav class="absolute">
 
-          if ($checkStatus == 1) {
-            while ($row = $result-> fetch_assoc()) {
-              if (password_verify($userPass, $row['password'])) {
-                session_start();
-                setcookie('loginfo', true, time() + 60 * 60 * 30);
-                setcookie('email', $reqEmail, time() + 60 * 60 * 30);
-                $_SESSION['loggedin'] = true;
-                
-                $_SESSION['email'] = $userEmail;
-                $user = $row['username'];
-                $user_id = $row['user_id'];
-                $_SESSION['userid']  = $user_id;
-                $_SESSION['username'] = $user;
-                // insert user id into database called 'user_info'
-                $loggedin = true;
-                header('location: ../');
-              } else {
-                $showAlert = true;
-                $error = "Invalid Password";
-              }
-            }
-          } else {  
-            $showAlert = true;
-            $error = "Invalid Credentials!";
-          }
-        }
-      }
-      
-      ?>
-
-<?php
-// check if aldready logged in or not
-session_start();
-if (isset($_SESSION['loggedin']) == true) {
-  header('location: ../');
-  exit;
-}
-?> 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width,initial-scale=2,maximum-scale=1" />
-  <meta name="description" content="School project for college, college project for school, school project for high school and school project for university.">
-  <!-- favicon -->
-  <link rel="icon" type="image/png" sizes="120x120" href="../notes-cloud-120.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="../notes-cloud-96.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../notes-cloud-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../notes-cloud-16.png">
-  <title>SignIn | e-Notes</title>
-  <!-- box Icons -->
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <!-- Main Styling -->
-
-  <link rel="stylesheet" href="../assets/css/styles.css?key=<?php echo time(); ?>" />
-  <link rel="stylesheet" href="../assets/css/footer.css" />
-  <link rel="stylesheet" href="../assets/css/alert.css">
-</head>
-
-<body>
-  <div class="alertbox">
-    <!-- error bar -->
-     <?php
-          if ($showAlert == true) {
-            echo "<div class='alert' id='alert'>
-  <span class='closebtn' onclick='myFun()'>&times;</span>
-  <strong>Warning!  </strong> ";
-            echo $error;
-            echo "
-</div>";
-          }
-          ?> 
-    <!-- for auto dismissal of alert bar or manual close -->
-    <script src="../assets/js/alert.js"></script>
-  </div>
-  <div class="container">
-    <div class="main">
-      <div class="cnt1">
-        <!-- Navbar -->
-        <nav class="absolute">
-
-          <div class="cnt2">
-            <a class="cname" href="../"> e-Notes </a>
-            <div class="navbar-menu">
-              <ul class="list">
-                <li>
-                  <a href="./sign-up.php">
-                    <i class="bx bxs-user "></i>
-                    Sign Up
-                  </a>
-                </li>
-                <li>
-                  <a href="./sign-in.php">
-                    <u> <i class="bx bxs-key bx-flashing "></i>
-                      Sign In </u>
-                  </a>
-                </li>
-              </ul>
+            <div class="cnt2">
+              <a class="cname" href="../"> e-Notes </a>
+              <div class="navbar-menu">
+                <ul class="list">
+                  <li>
+                    <a href="./sign-up">
+                      <i class="bx bxs-user "></i>
+                      Sign Up
+                    </a>
+                  </li>
+                  <li>
+                    <a href="./sign-in">
+                      <u> <i class="bx bxs-key bx-flashing "></i>
+                        Sign In </u>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+
+    <section>
+      <div class="box-form" style="margin-top: 80px;">
+        <div>
+          <div class="title1">
+            <h3>Welcome Back!</h3>
+            <p>Enter your email and password to sign in
+            </p>
           </div>
-        </nav>
-      </div>
-    </div>
-  </div>
-
-  <section>
-    <div class="box-form" style="margin-top: 80px;">
-      <div>
-        <div class="title1">
-          <h3>Welcome Back!</h3>
-          <p>Enter your email and password to sign in
-          </p>
-        </div>
-        <div class="contForm">
-          <form role="form" method="POST" onsubmit="return validateSys()">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email Address" required />
-            <label for="password">Password</label>
-            <input type="Password" id="password" name="password" placeholder="Password" required />
-            <p id="passError" style="height: 12px; padding: 3px; font-size:small;"></p>
-            <button type="submit">Login</button>
-            <script src="../assets/js/validateSignin.js"></script>
-          </form>
-        </div>
-        <div class="accInfo">
-          <p>
-            Create a new account ?
-            <a href="./sign-up.php">Sign Up</a>
-          </p>
+          <div class="contForm">
+            <form role="form" method="POST" id="signinForm">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="Email Address" required />
+              <label for="password">Password</label>
+              <input type="Password" id="password" name="password" placeholder="Password" required />
+              <p id="errorMessage" style=" height: 12px; padding: 3px; font-size:small;"></p>
+              <button type="submit">Login</button>
+            </form>
+          </div>
+          <div class="accInfo">
+            <p>
+              Create a new account ?
+              <a href="./sign-up.php">Sign Up</a>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  <footer class="py-12">
-    <div class="container3">
-      <div class="foot2">
-        <div class="hehe">
-          <p>
-            Copyright ©
-            <script>
-              document.write(new Date().getFullYear());
-            </script>
-           |  Ashis Kunwar
-          </p>
+    </section>
+    <footer class="py-12">
+      <div class="container3">
+        <div class="foot2">
+          <div class="hehe">
+            <p>
+              Copyright © <span id="datecc"></span>
+              <script>
+                document.getElementById("datecc").innerHTML = (new Date().getFullYear());
+              </script>
+              | Ashis Kunwar
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-</body>
+    </footer>
 
+  </body>
+<script src="../assets/js/validateSignin.js"></script>
 
-</html>
+  </html>
