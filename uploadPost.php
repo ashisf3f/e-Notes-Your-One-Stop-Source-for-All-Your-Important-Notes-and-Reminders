@@ -1,32 +1,49 @@
 <?php
-session_start();
-
 require './backend/database/db.inc.php';
-$info = 0;
-$showErr = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $postTitle = $_POST['title'];
-    $postDetails = $_POST['postDet'];
-    // using string replace to escape the single quote error
-    $checkQuote = str_replace("'","\'" ,$postDetails);
-    $email = $_SESSION['email'];
-    $author = $_SESSION['username'];
-    // $userid = $_SESSION['userid'];
+    session_start();
+    $response = array ();
+    $content = trim(file_get_contents("php://input"));
+    $_arr = json_decode($content, true);
 
-    $sql = "INSERT INTO `posts`(`date`,`title`, `postDet`,`author`, `email`) VALUES (DATE(NOW()),'$postTitle','$checkQuote','$author','$email')";
-    $result = $conn->query($sql);
-    if($result){
-        $info = "Upload Success";
-        header("location: ./?info=$info");
+    $postTitle = $_arr['postTitle'];
+    $postDetails = $_arr['postDetails'];
+
+    if (empty($postTitle)) {
+        $response["error"]  = 'Give some title';
+        header('Content-Type: application/json');
+        echo json_encode($response);
         exit();
-    }
-    else{
-        $info = "Upload failed";
-        header("location: ./?info=$info");
+    } else  if (empty($postDetails)) {
+        $response["error"]  = 'Enter some note';
+        header('Content-Type: application/json');
+        echo json_encode($response);
         exit();
+    } else {
+       
+        $checkQuote = str_replace("'", "\'", $postDetails);
+        $email = $_SESSION['email'];
+        $author = $_SESSION['username'];
+        // $userid = $_SESSION['userid'];
+
+        $sql = "INSERT INTO `posts`(`date`,`title`, `postDet`,`author`, `email`) VALUES (DATE(NOW()),'$postTitle','$checkQuote','$author','$email')";
+
+        $result = $conn->query($sql);
+
+        if ($result) {
+            $response["success"]  = 'Successfully uploaded note';
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            exit();
+        } else {
+            $response["error"]  = 'Couldn\'t upload your note';
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit();
+        }
     }
 } else {
-    header("location: ./pages");
+    header("location: ./");
     exit();
 }

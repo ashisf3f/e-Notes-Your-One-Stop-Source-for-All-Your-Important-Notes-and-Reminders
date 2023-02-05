@@ -107,6 +107,6 @@
     </footer>
 
   </body>
-<script src="../assets/js/validateSignin.js"></script>
+  <script src="../assets/js/validateSignin.js"></script>
 
   </html>

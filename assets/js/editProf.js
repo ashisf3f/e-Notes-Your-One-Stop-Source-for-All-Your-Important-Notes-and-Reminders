@@ -1,6 +1,6 @@
 // Get the modal
 let btn1 = document.getElementById("openEdit");
-btn1.onclick =()=> {
+btn1.onclick = () => {
   let modal = document.getElementById("myModal");
   if (modal.style.display == "block") {
     modal.style.display = "none";

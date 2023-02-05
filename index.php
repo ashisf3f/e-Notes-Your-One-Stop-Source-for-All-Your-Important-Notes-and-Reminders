@@ -40,6 +40,7 @@ $profile = $result->fetch_assoc();
   <script src="https://kit.fontawesome.com/4b2492399d.js" crossorigin="anonymous"></script>
   <link href="./assets/css/test.css?key=<?php echo time(); ?>" type="text/css" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/css/responsive.css?key=<?php echo time(); ?>" />
+  <link rel="stylesheet" href="./assets/css/error.css?key=<?php echo time(); ?>" />
 </head>
 
 <body>
@@ -91,6 +92,18 @@ $profile = $result->fetch_assoc();
       }
     });
   </script>
+
+  <!-- notificaiton (success or error) -->
+  <div class="not-info" id="notInfo">
+    <div class="not-msg" id="notBox">
+      <div class="not-close">
+        <i class="fa-solid fa-xmark" id="notClose"></i>
+      </div>
+      <div class="not-text">
+        <i class="fa-solid" id="notSymbol"></i> <span id="notMsg"></span>
+      </div>
+    </div>
+  </div>
   <!-- mobilebtn to upload post -->
   <div class="fixed_btn" id="mobBtn">
     <i class="fa-solid fa-comment-medical"></i>
@@ -155,13 +168,13 @@ $profile = $result->fetch_assoc();
                       } ?>" alt="" />
           </div>
           <div class="upload-details">
-            <form action="./uploadPost" onsubmit="return postValidate()" method="post">
+            <form id="myForm" method="post">
               <!-- <label for="input-title"></label> -->
               <div class="upload-content title">
-                <input type="text" name="title" maxlength="48" pattern="[a-zA-Z0-9 ]+" title="Only alphabets and numbers are allowed." placeholder="Title" id="postTitle" />
+                <input type="text" name="postTitle" maxlength="48" pattern="[a-zA-Z0-9 ]+" title="Only alphabets and numbers are allowed." placeholder="Title" id="postTitle" />
               </div>
               <div class="upload-content story">
-                <textarea type="text" id="postDet" name="postDet" maxlength="420">
+                <textarea type="text" id="postDetails" name="postDetails" maxlength="420">
 Say something about yourself!</textarea>
               </div>
               <div class="sub-btn">
@@ -171,67 +184,8 @@ Say something about yourself!</textarea>
           </div>
         </div>
         <div class="meta-body">
-          <?php
-          $useremail = $_SESSION['email'];
-          $sql = "SELECT * FROM `posts` ORDER BY `posts`.`post_id` DESC";
-          $result = $conn->query($sql);
-          if ($checkData = $result->num_rows) {
-            while ($row =
-              $result->fetch_array(MYSQLI_ASSOC)
-            ) {
-              $post_id = $row['post_id'];
-              $prof_email = $row['email'];
-              $query = "SELECT * FROM  `user_info` WHERE `email` = '$prof_email' ";
-              $result1 = $conn->query($query);
-              $profile = $result1->fetch_assoc();
-              // fetch user id form singup
-
-              $sqlId  = "SELECT `id` FROM `sign_up` WHERE `email`='$prof_email'";
-              $resuldId = $conn->query($sqlId);
-              $fetchedId = $resuldId->fetch_assoc();
-              echo ("
-              
-              <div class='post'>
-                <div class='post-info'>
-                 <div class='auth-pic'>
-                  <img src='");
-              if (isset($profile['img_name'])) {
-                echo './backend/uploads/' . $profile['img_name'];
-              } else {
-                echo "./assets/img/customer-80.png";
-              }
-              echo (" '/>
-                  <div class='auth-details'>
-                  <form action= './profile' method='get'>
-                    <input type='hidden' name='id' value='" . $fetchedId['id'] . "'>
-                    <span class='auth-name'>  <input type='submit' name='author' value='" . $row['author'] . "' /> </span>
-                  </form>
-                   </span>
-                    <div class='post-time'>") . $row['date'] . ("</div>
-                  </div>
-                   </div>
-                   <div>
-                </div>
-                  <div class='post-manager'> 
-                    <div class='dwnld'>
-                    <a href='downloadpost?postId=$post_id'>
-                    <i class='fa-solid fa-cloud-arrow-down' id='downloadButton'></i> </a>
-                    </div>
-                   </div>
-                </div>
-                <div class='auth-title post-details'>
-                ") . $row['title'] . ("</div>
-                <div class='auth-post post-details'>") .
-                $row['postDet'] . ("
-                </div>
-              </div>
-
-");
-            }
-          } else {
-            echo ("<div class='post' style='color:red; text-align:center;'>No any notes Available, <span style='color:rgb(0, 102, 255);'> upload notes </span> to see </div>");
-          }
-          ?>
+          <div id="postContainer"></div>
+          <script src="./assets/js/fetchposts.js"></script>
         </div>
       </div>
     </div>
@@ -246,7 +200,7 @@ Say something about yourself!</textarea>
         $result = $conn->query($checkStats);
         $checkRow = $result->num_rows;
         if ($checkRow > 0) {
-          $threshold = 5;
+          $threshold = 4;
           while ($row = $result->fetch_assoc()) {
             if ($row['count'] >= $threshold) {
               $most_frequent_email = $row['email'];
@@ -268,15 +222,12 @@ Say something about yourself!</textarea>
                 if (isset($profile['img_name'])) {
                   echo './backend/uploads/' . $profile['img_name'];
                 } else {
-                  echo './apple-touch-icon.png';
+                  echo './assets/img/customer-80.png';
                 }
-                echo ("'/><input type='submit' name='username' value='" . $user['username'] . "'>
+                echo ("'/><input type='submit' name='author' value='" . $user['username'] . "'>
                 </div>
                   </form>");
               }
-            }
-            else{
-              echo ("<div style='margin-top: 12px;'> only few notes</div>");
             }
           }
         } else {
@@ -292,20 +243,20 @@ Say something about yourself!</textarea>
     <div class="modal-content">
       <span class="head">Upload Note!</span>
       <span class="close">&times;</span>
-      <form action="./uploadPost" id="myForm" onsubmit="return postValidate1()" method="POST">
+      <form id="myFormModal" method="POST">
         <div class="form-content">
-          <input type="text" id="postTitle1" maxlength="48" name="title" placeholder="Title" required />
+          <input type="text" id="postTitle1" maxlength="48" name="postTitle1" placeholder="Title" required />
         </div>
         <div class="form-content">
-          <textarea maxlength="420" name="postDet" id="postDet1"></textarea>
+          <textarea maxlength="420" name="postDetails1" id="postDetails1"></textarea>
         </div>
         <button type="submit" class="subBtn">Post</button>
       </form>
     </div>
   </div>
 </body>
-<script src="./assets/js/modalBox.js"></script>
-<script src="./assets/js/postValidate.js"></script>
-<script src="./assets/js/dwnloadPost.js"></script>
+<script src="./assets/js/modalBox.js?key=<?php echo time() ?>"></script>
+<script src="./assets/js/postValidate.js?key=<?php echo time() ?>"></script>
+<script src="./assets/js/dwnloadPost.js?key=<?php echo time() ?>"></script>
 
 </html>

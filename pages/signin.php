@@ -1,8 +1,6 @@
 <?php
 require '../backend/database/db.inc.php';
 
-$showAlert = false;
-$error  = '';
 $loggedin = false;
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -41,13 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $_SESSION['userid']  = $user_id;
                     $_SESSION['username'] = $user;
 
-                   
+
                     $loggedin = true;
                     $response["redirect"]  = '../';
                     header('Content-Type: application/json');
                     echo json_encode($response);
-                    exit(); 
-                
+                    exit();
                 } else {
                     $response["error"]  = 'Invalid Passowrd';
                     header('Content-Type: application/json');
