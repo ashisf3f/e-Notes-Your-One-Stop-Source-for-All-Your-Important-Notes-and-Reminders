@@ -35,7 +35,7 @@ const fetchData = () => {
               </div>
               <div class="post-manager">
                 <div class="dwnld">
-                  <a href="downloadpost?${post.post_id}">
+                  <a href="./downloadpost?postId=${post.post_id}">
                     <i class='fa-solid fa-cloud-arrow-down' id='downloadButton'></i>
                   </a>
                 </div>

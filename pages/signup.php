@@ -1,7 +1,6 @@
 <?php
   require '../backend/database/db.inc.php';
-  $showAlert = 0;
-  $error = 0;
+ 
 
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $response = array();
@@ -47,7 +46,7 @@
     } else {
       
       // Check if email already exists in the database
-      $existEmail = "SELECT * FROM `sign_up` WHERE Email = '$email'";
+      $existEmail = "SELECT * FROM `user_data` WHERE email = '$email'";
       $result = $conn->query($existEmail);
       $checkStatus = $result->num_rows;
       if ($checkStatus > 0) {
@@ -59,16 +58,17 @@
         // hash password
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
         // insert random number and submit form to sql database
-        $sql = "INSERT INTO `sign_up`( `email`, `username`, `password`) VALUES ('$email','$username','$hashPassword') ";
-        $query = "INSERT INTO `user_info`(`email`) VALUES ('$email')";
-        $info = $conn->query($query);
+        $sql = "INSERT INTO `user_data`( `email`, `username`, `password`) VALUES ('$email','$username','$hashPassword') ";
         $result3 = $conn->query($sql);
         if ($result3) {
             $response["redirect"]  = './sign-in';
             header('Content-Type: application/json');
             echo json_encode($response);
             exit();       
-        }
+        } 
       }
     }
+  }else{
+    header("location: ./sign-up");
+    exit();
   }

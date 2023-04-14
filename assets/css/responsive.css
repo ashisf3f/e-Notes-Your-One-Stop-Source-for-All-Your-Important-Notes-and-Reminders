@@ -36,6 +36,16 @@
 }
 
 @media (max-width: 768px) {
+  .user-name{
+    display: none;
+  }
+  .profile-menu img{
+    height: 36px;
+    width: 36px;
+  }
+  .logo{
+    line-height: 2.2;
+  }
   /* The Modal (background) */
   .modal {
     position: fixed;
@@ -147,7 +157,7 @@
   }
   .profile-setting {
     display: block;
-    line-height: 1.5;
+    line-height: 2.2;
     /* margin-top: ;     */
     margin-left: 12px;
     /* color: black; */

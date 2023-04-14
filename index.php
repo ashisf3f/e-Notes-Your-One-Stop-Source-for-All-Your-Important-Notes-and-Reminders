@@ -38,7 +38,7 @@ $profile = $result->fetch_assoc();
   <title>e-Notes: Your One-Stop Source for All Your Important Notes and Reminders</title>
   <!-- icons for web -->
   <script src="https://kit.fontawesome.com/4b2492399d.js" crossorigin="anonymous"></script>
-  <link href="./assets/css/test.css?key=<?php echo time(); ?>" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/index.css?key=<?php echo time(); ?>" type="text/css" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/css/responsive.css?key=<?php echo time(); ?>" />
   <link rel="stylesheet" href="./assets/css/error.css?key=<?php echo time(); ?>" />
 </head>
@@ -133,19 +133,23 @@ $profile = $result->fetch_assoc();
             while ($row = $result->fetch_assoc()) {
               $most_frequent_email = $row['email'];
               // Execute the SQL query to retrieve user information
-              $query = "SELECT  `title`, `author` FROM `posts` WHERE `email` = '$most_frequent_email' ORDER BY post_id desc  LIMIT 1";
+              $query = "SELECT  `title`,`post_id` , `author` FROM `posts` WHERE `email` = '$most_frequent_email' ORDER BY post_id desc  LIMIT 1";
               $result2 = $conn->query($query);
-              while ($user = $result2->fetch_assoc()) {
+              while ($post = $result2->fetch_assoc()) {
                 echo ("
+                    <form action='./posts'>
                     <div class='recent-details'>
                       <div class='recent-title'>
-                      <i class='fa-solid fa-retweet'></i> 
-                        <div class='rt'>") . $user['title'] . ("</div>
+                      <input type='hidden' name='post_id' value='" . $post['post_id'] . "'>
+                      <input type='hidden' name='author' value='" . $post['author'] . "'>
+                        <button type='submit'  class='rt'>" . $post['title'] . "</button>
                       </div>
+                      </button>
                       <div class='recent-author'>
-                        <span class='ra'>author:</span>") . $user['author'] . ("
+                        <span class='ra'> author: </span>" . $post['author'] . "
                       </div>
                     </div>
+                    </form>
                     ");
               }
             }
@@ -185,7 +189,7 @@ Say something about yourself!</textarea>
         </div>
         <div class="meta-body">
           <div id="postContainer"></div>
-          <script src="./assets/js/fetchposts.js"></script>
+          <script src="./assets/js/fetchposts.js?key=<?php echo time() ?>"></script>
         </div>
       </div>
     </div>
@@ -257,6 +261,4 @@ Say something about yourself!</textarea>
 </body>
 <script src="./assets/js/modalBox.js?key=<?php echo time() ?>"></script>
 <script src="./assets/js/postValidate.js?key=<?php echo time() ?>"></script>
-<script src="./assets/js/dwnloadPost.js?key=<?php echo time() ?>"></script>
-
 </html>

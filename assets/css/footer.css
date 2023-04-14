@@ -5,15 +5,16 @@ footer {
   display: block;
   justify-content: center;
   width: 100%;
-
+  color: white;
 }
 
 .foot2 {
   padding-top: 10px;
-
+  color: white;
   text-align: center;
 }
 .hehe {
+  color: white;
   max-width: 100%;
   padding: 0 12px;
   text-align: center;

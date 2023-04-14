@@ -3,7 +3,7 @@
 $serverName = "localhost";
 $userName = "root";
 $password = '';
-$database = 'School_project';
+$database = 'enotes';
 
 $conn = new mysqli($serverName , $userName , $password , $database);
 

@@ -120,6 +120,7 @@ body {
 
 }
 .profilePic img {
+  object-fit: cover;
   height: 86px;
   width: 86px;
   border-radius: 50%;
@@ -341,6 +342,7 @@ hr {
   }
   
   .profilePic img {
+    object-fit: cover;
     height: 56px;
     width: 56px;
   }

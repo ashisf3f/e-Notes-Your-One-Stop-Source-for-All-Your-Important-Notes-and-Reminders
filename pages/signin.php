@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         exit();
     } else {
         $userEmail = mysqli_real_escape_string($conn, $userEmail);
-        $checkExist = "SELECT * from sign_up Where Email='$userEmail'";
+        $checkExist = "SELECT * from  `sign_up` Where Email='$userEmail'";
         $result = $conn->query($checkExist);
         $checkStatus = $result->num_rows;
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     echo json_encode($response);
                     exit();
                 } else {
-                    $response["error"]  = 'Invalid Passowrd';
+                    $response["error"]  = 'Invalid Password';
                     header('Content-Type: application/json');
                     echo json_encode($response);
                     exit();
@@ -59,4 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             exit();
         }
     }
+}
+else{
+    header("location: ./sign-in");
+    exit();
 }

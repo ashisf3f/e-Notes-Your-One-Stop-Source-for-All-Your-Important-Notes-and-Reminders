@@ -5,6 +5,7 @@
     header('location: ../');
     exit;
   }
+  $redirect = "http://localhost/testing/redirect?destination="
   ?>
 
   <!DOCTYPE html>
@@ -13,14 +14,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=2,maximum-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="School project for college, college project for school, school project for high school and school project for university.">
     <!-- favicon -->
     <link rel="icon" type="image/png" sizes="120x120" href="../notes-cloud-120.png">
     <link rel="icon" type="image/png" sizes="96x96" href="../notes-cloud-96.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../notes-cloud-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../notes-cloud-16.png">
-    <title>SignIn | e-Notes</title>
+    <title>e-Notes: Your One-Stop Source for All Your Important Notes and Reminders</title>
+
     <!-- box Icons -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <!-- Main Styling -->
@@ -39,7 +41,7 @@
           <nav class="absolute">
 
             <div class="cnt2">
-              <a class="cname" href="../"> e-Notes </a>
+              <a class="cname" href="../">e-Notes </a>
               <div class="navbar-menu">
                 <ul class="list">
                   <li>
@@ -77,14 +79,14 @@
               <input type="email" id="email" name="email" placeholder="Email Address" required />
               <label for="password">Password</label>
               <input type="Password" id="password" name="password" placeholder="Password" required />
-              <p id="errorMessage" style=" height: 12px; padding: 3px; font-size:small;"></p>
+              <p id="errorMessage" style=" height: 12px; padding: 3px; font-size:small; color: #EF4444;"></p>
               <button type="submit">Login</button>
             </form>
           </div>
           <div class="accInfo">
             <p>
               Create a new account ?
-              <a href="./sign-up.php">Sign Up</a>
+              <a href="./sign-up">Sign Up</a>
             </p>
           </div>
         </div>
@@ -99,7 +101,7 @@
               <script>
                 document.getElementById("datecc").innerHTML = (new Date().getFullYear());
               </script>
-              | Ashis Kunwar
+              | e-Notes By <a href="<?php echo $redirect ?>https://www.ashiskunwar.com.np" target="_blank">Ashis Kunwar</a>
             </p>
           </div>
         </div>
@@ -107,6 +109,6 @@
     </footer>
 
   </body>
-  <script src="../assets/js/validateSignin.js"></script>
+  <script src="../assets/js/validateSignin.js?key=<?php echo time() ?>"></script>
 
   </html>

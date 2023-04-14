@@ -18,7 +18,8 @@ if (isset($_SESSION['loggedin']) == true) {
   <meta name="viewport" content="width=device-width,initial-scale=2,maximum-scale=1" />
   <meta name="description" content="School project for college, college project for school, school project for high school and school project for university.">
   <!-- favicon -->
-  <link rel="icon" type="image/png" sizes="120x120" href="../notes-cloud-120.png">
+   <!-- favicon -->
+   <link rel="icon" type="image/png" sizes="120x120" href="../notes-cloud-120.png">
   <link rel="icon" type="image/png" sizes="96x96" href="../notes-cloud-96.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../notes-cloud-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../notes-cloud-16.png">
@@ -36,7 +37,7 @@ if (isset($_SESSION['loggedin']) == true) {
         <!-- Navbar -->
         <nav>
           <div class="cnt2">
-            <a class="cname" href="../index.php"> e-Notes </a>
+            <a class="cname" href="../index.php">e-Notes</a>
             <div class="navbar-menu">
               <ul class="list">
                 <li>
