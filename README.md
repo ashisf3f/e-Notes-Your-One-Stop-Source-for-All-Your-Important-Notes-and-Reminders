@@ -1,3 +1,12 @@
-`` © Copyright [ashiskunwar](https://ashiskunwar.com.np) ``
 
-## In this project the tool used are php , css , js and html
+# PHP Project
+
+e-Notes: Your One-Stop Source for All Your Important Notes and Reminders
+
+
+## Authors
+
+- [@ashiskunwar](https://www.ashiskunwar.com.np/)
+
+
+
